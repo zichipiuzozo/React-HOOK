@@ -1,38 +1,105 @@
 import logo from "./logo.svg";
 import "./App.css";
 import Nav from "./views/Nav";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import Todo from "./views/Todo";
+import Covid from "./views/Covid";
+import { Countdown, NewCountDown } from "./views/Countdown";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 const App = () => {
-  let obj = { name: "TA", class: "10a1" };
-  let [name, setName] = useState("Tuan Anh");
+  const [address, setAddress] = useState("");
+  const [todos, setTodos] = useState([
+    { id: "todo1", title: "doing homework", type: "string" },
+    { id: "todo2", title: "playing game", type: "string" },
+    { id: "todo3", title: "fixing bug", type: "integer" },
+    { id: "todo4", title: "reading book", type: "integer" }
+  ]);
 
-  const handleEventClick = event => {
-    console.log("click me", name);
+  useEffect(() => {
+    console.log("run use effect");
+  }, []);
+  useEffect(() => {
+    console.log("run use effect todos");
+  }, [todos]);
+
+  const handleOnclick = event => {
+    if (!address) {
+      alert("empty input");
+      return;
+    }
+    let newTodo = {
+      id: Math.floor(Math.random() * 11000),
+      title: address,
+      type: "string"
+    };
+    setTodos([...todos, newTodo]);
+    setAddress("");
+  };
+
+  const handleOnchangeInput = event => {
+    setAddress(event.target.value);
+    console.log("check new value: ", event.target.value);
+  };
+
+  const deleteDataTodo = id => {
+    let curTodo = todos;
+    curTodo = curTodo.filter(item => item.id !== id);
+    setTodos(curTodo);
+  };
+
+  const onTimesup = () => {
+    alert(`Time's up`);
   };
   return (
-    <div className="App">
-      <Nav />
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <h1>
-          Hello world by {name} in {obj.class}
-        </h1>
-        {/* <input
-          type="text"
-          defaultValue="Tuan Anh"
-          onClick={event => handleEventClick(event)}
-        /> */}
-        <button
-          type="button"
-          onClick={() => {
-            handleEventClick();
-          }}
-        >
-          click me
-        </button>
-      </header>
-    </div>
+    <BrowserRouter>
+      <div className="App">
+        <header className="App-header">
+          <Nav />
+          <img src={logo} className="App-logo" alt="logo" />
+        </header>
+
+        <Routes>
+          <Route path="/" element={<Covid />} exact></Route>
+          <Route
+            path="/timer"
+            element={
+              <>
+                {" "}
+                <Countdown />
+                <span>-----------------</span>
+                <NewCountDown onTimesup={onTimesup} />{" "}
+              </>
+            }
+          ></Route>
+          <Route
+            path="/todo"
+            element={
+              <>
+                <Todo
+                  todos={todos}
+                  title={`All todos`}
+                  deleteDataTodo={deleteDataTodo}
+                />
+                <input
+                  type="text"
+                  value={address}
+                  onChange={event => handleOnchangeInput(event)}
+                />
+                <button
+                  type="button"
+                  onClick={event => {
+                    handleOnclick(event);
+                  }}
+                >
+                  click me
+                </button>
+              </>
+            }
+          ></Route>
+        </Routes>
+      </div>
+    </BrowserRouter>
   );
 };
 
