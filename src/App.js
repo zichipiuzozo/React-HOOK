@@ -6,6 +6,7 @@ import Todo from "./views/Todo";
 import Covid from "./views/Covid";
 import { Countdown, NewCountDown } from "./views/Countdown";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Blog from "./views/Blog";
 
 const App = () => {
   const [address, setAddress] = useState("");
@@ -17,10 +18,10 @@ const App = () => {
   ]);
 
   useEffect(() => {
-    console.log("run use effect");
+    // console.log("run use effect");
   }, []);
   useEffect(() => {
-    console.log("run use effect todos");
+    // console.log("run use effect todos");
   }, [todos]);
 
   const handleOnclick = event => {
@@ -60,7 +61,7 @@ const App = () => {
         </header>
 
         <Routes>
-          <Route path="/" element={<Covid />} exact></Route>
+          <Route path="/" element={<Covid />} exact="true"></Route>
           <Route
             path="/timer"
             element={
@@ -97,6 +98,7 @@ const App = () => {
               </>
             }
           ></Route>
+          <Route path="/blogs" element={<Blog />}></Route>
         </Routes>
       </div>
     </BrowserRouter>
