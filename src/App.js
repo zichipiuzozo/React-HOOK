@@ -7,6 +7,8 @@ import Covid from "./views/Covid";
 import { Countdown, NewCountDown } from "./views/Countdown";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Blog from "./views/Blog";
+import DetailBlog from "./views/DetailBlog";
+import AddNewBlog from "./views/AddNewBlog";
 
 const App = () => {
   const [address, setAddress] = useState("");
@@ -98,7 +100,9 @@ const App = () => {
               </>
             }
           ></Route>
-          <Route path="/blogs" element={<Blog />}></Route>
+          <Route path="/blog" element={<Blog />} exact></Route>
+          <Route path="/blog/:id" element={<DetailBlog />}></Route>
+          <Route path="/add-new-blog" element={<AddNewBlog />}></Route>
         </Routes>
       </div>
     </BrowserRouter>

@@ -25,7 +25,7 @@ const useFetch = (url, isCovidData) => {
       }
       setTimeout(() => {
         fetchData();
-      }, 3000);
+      }, 1000);
     } catch (e) {
       setIsError(true);
       setIsLoading(false);
