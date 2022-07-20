@@ -9,6 +9,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Blog from "./views/Blog";
 import DetailBlog from "./views/DetailBlog";
 import AddNewBlog from "./views/AddNewBlog";
+import NotFound from "./views/NotFound";
 
 const App = () => {
   const [address, setAddress] = useState("");
@@ -103,6 +104,7 @@ const App = () => {
           <Route path="/blog" element={<Blog />} exact></Route>
           <Route path="/blog/:id" element={<DetailBlog />}></Route>
           <Route path="/add-new-blog" element={<AddNewBlog />}></Route>
+          <Route path="*" element={<NotFound />}></Route>
         </Routes>
       </div>
     </BrowserRouter>
