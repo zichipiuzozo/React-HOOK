@@ -63,3 +63,51 @@
     margin: left;
   }
 }
+
+.youtube-search-container {
+  input {
+    outline: none;
+    min-width: 360px;
+    border: none;
+    padding: 5px 8px;
+  }
+  button {
+    outline: none;
+    padding: 5px 10px;
+    border: none;
+    background-color: #e2e2e2;
+  }
+}
+
+.yt-result {
+  display: flex;
+  width: 100%;
+  margin-top: 20px;
+  padding: 0 100px;
+
+  .left {
+    border: 1px solid red;
+    width: 40%;
+    padding: 0 10px;
+
+    .ifram-yt {
+      width: 100%;
+      height: 270px;
+    }
+  }
+  .right {
+    border: 1px solid green;
+    width: 60%;
+    text-align: left;
+    padding: 5px;
+    font-size: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    .title {
+      font-size: 18px;
+      font-weight: 600;
+    }
+  }
+}
