@@ -1,10 +1,9 @@
 import "./Blog.scss";
 import axios from "axios";
-import { useSate, useEffect } from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import moment from "moment";
 const YoutubeSearch = () => {
-  const { video, setVideos } = useState([]);
+  const { videos, setVideos } = useState([]);
   const [query, setQuery] = useState("");
 
   useEffect(() => {}, []);
@@ -21,8 +20,8 @@ const YoutubeSearch = () => {
         q: query
       }
     });
-    if (res && res.item) {
-      let raw = res.items;
+    if (res && res.data && res.data.items) {
+      let raw = res.data.items;
       let result = [];
       if (raw && raw.length > 0) {
         raw.map(item => {
@@ -37,9 +36,8 @@ const YoutubeSearch = () => {
         });
       }
       setVideos(result);
+      console.log("check data youtube: ", result);
     }
-
-    console.log("check data youtube: ", res);
   };
   return (
     <div className="youtube-search-container">
@@ -54,60 +52,33 @@ const YoutubeSearch = () => {
           Search
         </button>
       </div>
-      <div className="yt-result">
-        <div className="left">
-          <iframe
-            className="ifram-yt"
-            src="https://www.youtube.com/embed/2VcCeg6Or_4"
-            title="LIVERPOOL - MANCHESTER UNITED | NGÀY BÙNG NỔ CỦA SALAH - MANE - DIAZ - JOTA | NGOẠI HẠNG ANH 21/22"
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-          ></iframe>
-        </div>
-        <div className="right">
-          <div className="title">
-            LIVERPOOL - MANCHESTER UNITED | NGÀY BÙNG NỔ CỦA SALAH - MANE - DIAZ
-            - JOTA | NGOẠI HẠNG ANH 21/22
-          </div>
-          <div className="createed-at">
-            Created at:{" "}
-            {moment("2022-04-19T21:17:39Z").format("DD-MM-YYYY HH:mm:ss A")}
-          </div>
-          <div className="author">Author: Kplus Sports</div>
-          <div className="description">
-            LIVERPOOL - MANCHESTER UNITED | NGÀY BÙNG NỔ CỦA SALAH - MANE - DIAZ
-            - JOTA | NGOẠI HẠNG ANH 21/22 ...
-          </div>
-        </div>
-      </div>
-      <div className="yt-result">
-        <div className="left">
-          <iframe
-            className="ifram-yt"
-            src="https://www.youtube.com/embed/HLbizEXzG7s"
-            title="[🔴LIVE] T1 vs KDF - HLE vs KT | 2022 LCK Summer Split"
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-          ></iframe>
-        </div>
-        <div className="right">
-          <div className="title">
-            LIVERPOOL - MANCHESTER UNITED | NGÀY BÙNG NỔ CỦA SALAH - MANE - DIAZ
-            - JOTA | NGOẠI HẠNG ANH 21/22
-          </div>
-          <div className="createed-at">
-            Created at:{" "}
-            {moment("2022-04-19T21:17:39Z").format("DD-MM-YYYY HH:mm:ss A")}
-          </div>
-          <div className="author">Author: Kplus Sports</div>
-          <div className="description">
-            LIVERPOOL - MANCHESTER UNITED | NGÀY BÙNG NỔ CỦA SALAH - MANE - DIAZ
-            - JOTA | NGOẠI HẠNG ANH 21/22 ...
-          </div>
-        </div>
-      </div>
+      {videos &&
+        videos.length > 0 &&
+        videos.map(item => {
+          return (
+            <div className="yt-result" key={item.id}>
+              <div className="left">
+                <iframe
+                  className="ifram-yt"
+                  src={`https://www.youtube.com/embed/${item.id}`}
+                  title="Youtube video player"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
+              </div>
+              <div className="right">
+                <div className="title">{item.title}</div>
+                <div className="createed-at">
+                  Created at:{" "}
+                  {moment(item.createdAt).format("DD-MM-YYYY HH:mm:ss A")}
+                </div>
+                <div className="author">Author: {item.author}</div>
+                <div className="description">{item.description}</div>
+              </div>
+            </div>
+          );
+        })}
     </div>
   );
 };
